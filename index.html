@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Jaspreet Singh Portfolio</title>
+  <title>Henna & Mehndi by Manpreet</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -38,6 +38,7 @@
   <header id="header" class="d-flex flex-column justify-content-center">
 
     <nav id="navbar" class="navbar nav-menu">
+      <div id="navbar-img"></div>
       <ul>
         <li><a href="#hero" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Home</span></a></li>
         <li><a href="#about" class="nav-link scrollto"><i class="bx bx-user"></i> <span>About</span></a></li>
@@ -51,8 +52,8 @@
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex flex-column justify-content-center">
     <div class="container" data-aos="zoom-in" data-aos-delay="100">
-      <h1>Jaspreet Singh</h1>
-      <p>I'm <span class="typed" data-typed-items="Developer, Programmer"></span></p>
+      <h1>Manpreet Kaur</h1>
+      <p style="margin-left: 4px;">I'm a <span class="typed" data-typed-items="Traditional Mehndi Artist, Festival Henna Designer, Modern Mehndi Artist, Bridal Mehndi Designer, Party Henna Designer"></span></p>
       <div class="social-links">
         <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
         <a href="https://www.linkedin.com/in/singh-jass/" target="_blank" rel="noopener noreferrer" class="linkedin"><i class="bx bxl-linkedin"></i></a>
@@ -248,6 +249,125 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+
+<!-- Randomize #hero background only when (max-width: 600px) matches; updates dynamically -->
+<script id="random-hero-bg-script">
+  document.addEventListener("DOMContentLoaded", function() {
+    var hero = document.getElementById("hero");
+    if (!hero) return;
+
+    var mq = window.matchMedia("(max-width: 600px)");
+    var basePath = "assets/img/backgrounds";
+    if (basePath && !basePath.endsWith("/")) basePath += "/";
+
+    function pickRandomUrl() {
+      var n = Math.floor(Math.random() * 10) + 1; // 1..10
+      return basePath + "background-" + n + ".png";
+    }
+
+    function applyRandom() {
+      var url = pickRandomUrl();
+      var img = new Image();
+      img.onload = function() {
+        hero.style.backgroundImage = "url('" + url + "')";
+        hero.style.backgroundPosition = "top right";
+        hero.style.backgroundRepeat = "no-repeat";
+        hero.style.backgroundSize = "contain";
+      };
+      img.onerror = function() {
+        // If numbered image fails, clear inline style to let CSS fallback apply
+        hero.style.backgroundImage = "";
+      };
+      img.src = url + "?v=" + Math.random();
+    }
+
+    function clearInline() {
+      // Remove inline override so CSS media rule controls the background again
+      hero.style.backgroundImage = "";
+      hero.style.backgroundPosition = "";
+      hero.style.backgroundRepeat = "";
+      hero.style.backgroundSize = "";
+    }
+
+    function updateForMediaChange(e) {
+      if (e.matches) {
+        applyRandom();
+      } else {
+        clearInline();
+      }
+    }
+
+    // Initial state
+    updateForMediaChange(mq);
+
+    // React to changes (resize/orientation)
+    if (typeof mq.addEventListener === "function") {
+      mq.addEventListener("change", updateForMediaChange);
+    } else if (typeof mq.addListener === "function") {
+      // Safari/older
+      mq.addListener(updateForMediaChange);
+    }
+  });
+</script>
+
+<!-- Randomize #navbar-img background for mobile and large screens -->
+<script id="random-navbar-bg-script">
+  document.addEventListener("DOMContentLoaded", function() {
+    var navbarImg = document.querySelector("header #navbar #navbar-img");
+    if (!navbarImg) return;
+
+    var basePath = "assets/img/backgrounds/";
+    function pickRandomUrl() {
+      var n = Math.floor(Math.random() * 10) + 1;
+      return basePath + "background-" + n + ".png";
+    }
+
+    function applyRandom(el) {
+      var url = pickRandomUrl();
+      var img = new Image();
+      img.onload = function() {
+        el.style.backgroundImage = "url('" + url + "')";
+        el.style.backgroundSize = "cover";
+        el.style.backgroundPosition = "center";
+      };
+      img.onerror = function() {
+        el.style.backgroundImage = "";
+      };
+      img.src = url + "?v=" + Math.random();
+    }
+
+    function clearInline(el) {
+      el.style.backgroundImage = "";
+      el.style.backgroundSize = "";
+      el.style.backgroundPosition = "";
+    }
+
+    // Two media queries: <=600px and >=992px
+    var mqMobile = window.matchMedia("(max-width: 600px)");
+    var mqDesktop = window.matchMedia("(min-width: 992px)");
+
+    function update() {
+      if (mqMobile.matches || mqDesktop.matches) {
+        applyRandom(navbarImg);
+      } else {
+        clearInline(navbarImg); // mid-range: let CSS handle it (if any)
+      }
+    }
+
+    // Initial run
+    update();
+
+    // React to viewport changes
+    [mqMobile, mqDesktop].forEach(function(mq) {
+      if (typeof mq.addEventListener === "function") {
+        mq.addEventListener("change", update);
+      } else if (typeof mq.addListener === "function") {
+        mq.addListener(update);
+      }
+    });
+  });
+</script>
+
 
 </body>
 
