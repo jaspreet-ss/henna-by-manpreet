@@ -1,3 +1,26 @@
+@media only screen and (max-width:600px){
+  header #navbar #navbar-img { 
+    /* background-image: url('../img/background.png');  */
+    background-size: cover; 
+    background-position: center; 
+    color: var(--henna-cream); 
+    margin-left: 45px;
+    width: 170px;
+    height: 225px;
+  }
+}
+
+@media only screen and (min-width:992px){
+  header #navbar #navbar-img { 
+    /* background-image: url('../img/background.png');  */
+    background-size: cover; 
+    background-position: center; 
+    color: var(--henna-cream); 
+    width: 60px;
+    height: 95px;
+  }
+}
+
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
