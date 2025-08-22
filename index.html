@@ -272,12 +272,6 @@
               href="assets/img/events/Event-2.jpg"><img alt="Henna2" class="img-fluid" src="assets/img/events/Event-2.jpg" /></a></div>
           <div class="col-lg-4 col-md-6 gallery-item"><a data-pswp-height="900" data-pswp-width="1200"
               href="assets/img/events/Event-3.jpg"><img alt="Henna3" class="img-fluid" src="assets/img/events/Event-3.jpg" /></a></div>
-          <!-- <div class="col-lg-4 col-md-6 gallery-item"><a data-pswp-height="900" data-pswp-width="1200"
-      href="assets/img/henna4.jpg"><img alt="Henna4" class="img-fluid" src="assets/img/henna4.jpg" /></a></div>
-  <div class="col-lg-4 col-md-6 gallery-item"><a data-pswp-height="900" data-pswp-width="1200"
-      href="assets/img/henna5.jpg"><img alt="Henna5" class="img-fluid" src="assets/img/henna5.jpg" /></a></div>
-  <div class="col-lg-4 col-md-6 gallery-item"><a data-pswp-height="900" data-pswp-width="1200"
-      href="assets/img/henna6.jpg"><img alt="Henna6" class="img-fluid" src="assets/img/henna6.jpg" /></a></div> -->
         </div>
       </div>
     </section>
@@ -418,78 +412,103 @@
     });
   </script>
 
-  <!-- PhotoSwipe (UMD) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.8/umd/photoswipe.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.8/umd/photoswipe-lightbox.umd.min.js"></script>
-  <script>
-  (function () {
-    function initPS() {
-      try {
-        const galleryEl = document.querySelector('.pswp-gallery');
-        if (!galleryEl || typeof PhotoSwipeLightbox === 'undefined' || typeof PhotoSwipe === 'undefined') return;
+<!-- PhotoSwipe (UMD) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.8/umd/photoswipe.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.8/umd/photoswipe-lightbox.umd.min.js"></script>
+<script>
+(function () {
+  function initPS() {
+    try {
+      const galleryEl = document.querySelector('.pswp-gallery');
+      if (!galleryEl || typeof PhotoSwipeLightbox === 'undefined' || typeof PhotoSwipe === 'undefined') return;
 
-        const links = Array.from(galleryEl.querySelectorAll('a[href]'));
+      const links = Array.from(galleryEl.querySelectorAll('a[href]'));
 
-        // Build dataSource with natural image sizes (from thumbnail if available)
-        const dataSource = links.map(a => {
-          const thumb = a.querySelector('img');
-          let width = parseInt(a.getAttribute('data-pswp-width'), 10);
-          let height = parseInt(a.getAttribute('data-pswp-height'), 10);
+      // Build dataSource; sizes filled asynchronously
+      const dataSource = links.map(a => {
+        const thumb = a.querySelector('img');
+        return {
+          src: a.getAttribute('href'),
+          msrc: thumb ? thumb.src : undefined,
+          alt:  thumb ? (thumb.alt || '') : '',
+          width: 0,
+          height: 0
+        };
+      });
 
-          if ((!width || !height) && thumb && thumb.naturalWidth && thumb.naturalHeight) {
-            width = thumb.naturalWidth;
-            height = thumb.naturalHeight;
-          }
-
-          return {
-            src: a.getAttribute('href'),
-            msrc: thumb ? thumb.src : undefined,
-            alt:  thumb ? (thumb.alt || '') : '',
-            width: width || 0,
-            height: height || 0
-          };
-        });
-
-        const lightbox = new PhotoSwipeLightbox({
-          pswpModule: PhotoSwipe
-        });
-
-        // Ensure correct size if missing
-        function ensureSize(item, done) {
-          if (item.width > 0 && item.height > 0) return done();
-          const img = new Image();
-          img.onload = function () {
-            item.width = img.naturalWidth || 1;
-            item.height = img.naturalHeight || 1;
-            done();
-          };
-          img.onerror = function(){ done(); };
-          img.src = item.src;
-        }
-
-        lightbox.init();
-
-        links.forEach((a, index) => {
-          a.addEventListener('click', function (e) {
-            e.preventDefault();
-            const item = dataSource[index];
-            ensureSize(item, function () {
-              lightbox.loadAndOpen(index, dataSource);
-            });
-          }, false);
-        });
-      } catch (e) {
-        console.error('PhotoSwipe init failed:', e);
+      // Helper: fetch intrinsic size once per item
+      function fetchSizeFor(i, cb) {
+        const item = dataSource[i];
+        if (!item || (item.width > 0 && item.height > 0)) { cb && cb(); return; }
+        const img = new Image();
+        img.onload = function () {
+          item.width  = img.naturalWidth  || 1;
+          item.height = img.naturalHeight || 1;
+          cb && cb();
+        };
+        img.onerror = function(){ cb && cb(); };
+        img.src = item.src;
       }
-    }
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initPS);
-    } else {
-      initPS();
+      // Precompute sizes in the background (helps when swiping)
+      dataSource.forEach((_, i) => fetchSizeFor(i));
+
+      const lightbox = new PhotoSwipeLightbox({
+        pswpModule: PhotoSwipe,
+        initialZoomLevel: 'fit'   // open fully contained
+      });
+
+      lightbox.init();
+
+      // Ensure current + neighbors have sizes before opening
+      function openAt(index) {
+        let remaining = 0;
+        function need(i) {
+          if (i < 0 || i >= dataSource.length) return;
+          remaining++;
+          fetchSizeFor(i, () => { if (--remaining === 0) lightbox.loadAndOpen(index, dataSource); });
+        }
+        // Kick off current and neighbors
+        need(index);
+        need(index - 1);
+        need(index + 1);
+        // If none queued (edge case), open immediately
+        if (remaining === 0) lightbox.loadAndOpen(index, dataSource);
+      }
+
+      // Clicks
+      links.forEach((a, index) => {
+        a.addEventListener('click', function (e) {
+          e.preventDefault();
+          openAt(index);
+        }, false);
+      });
+
+      // When slide changes, if size still unknown, fix & refresh layout
+      lightbox.on('change', () => {
+        const pswp = lightbox.pswp;
+        const i = pswp.currIndex;
+        const item = dataSource[i];
+        if (item.width > 0 && item.height > 0) return;
+
+        fetchSizeFor(i, () => {
+          pswp.invalidateCurrItems();   // tell PS sizes changed
+          pswp.updateSize(true);        // re-measure & re-layout
+        });
+      });
+
+    } catch (e) {
+      console.error('PhotoSwipe init failed:', e);
     }
-  })();
-  </script>
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPS);
+  } else {
+    initPS();
+  }
+})();
+</script>
 
 </body>
 </html>
