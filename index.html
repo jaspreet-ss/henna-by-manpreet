@@ -150,6 +150,62 @@
 
     /* Layout tweaks */
     .contact-cta .btn-wrap { max-width: 420px; }
+
+    /* --- Enhancements for fuller, more interesting contact section --- */
+    .contact-cta {
+      min-height: 100vh;           /* fill the viewport on desktop */
+      position: relative;
+      isolation: isolate;
+    }
+    .contact-pattern {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(0,0,0,.035) 1px, transparent 1px);
+      background-size: 24px 24px;
+      z-index: -1;
+    }
+    .card-like {
+      background: #fff;
+      border-radius: 18px;
+      padding: 1.25rem;
+      box-shadow: 0 14px 36px rgba(0,0,0,.10);
+    }
+    @media (min-width: 992px) {
+      .contact-grid .sticky-lg-top { position: sticky !important; }
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      padding: .4rem .7rem;
+      border-radius: 999px;
+      background: #fff;
+      box-shadow: 0 8px 22px rgba(0,0,0,.08);
+      font-weight: 600;
+      font-size: .92rem;
+    }
+    .avail-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: .5rem;
+    }
+    @media (max-width: 576px) {
+      .avail-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    }
+    .date-pill {
+      user-select: none;
+      cursor: pointer;
+      border: 0;
+      padding: .65rem .75rem;
+      border-radius: 12px;
+      background: #f6f6f8;
+      font-weight: 600;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.05);
+      transition: transform .12s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .date-pill:hover { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(0,0,0,.08); }
+    .date-pill.is-weekend { background: #eefbf4; }
+    .date-pill.active { outline: 2px solid #1bbd36; background: #e8ffe5; }
   </style>
 </head>
 
@@ -419,59 +475,140 @@
     </section>
     <!-- End Gallery Section -->
 
-    <!-- ======= Contact Section ======= -->
-    <section id="contact" class="contact-cta section-bg">
+    <!-- ======= Contact Section (upgraded) ======= -->
+    <section id="contact" class="contact-cta section-bg position-relative">
+      <!-- subtle pattern -->
+      <span class="contact-pattern" aria-hidden="true"></span>
+
       <div class="container" data-aos="fade-up">
         <div class="section-title">
           <h2>Contact Me</h2>
           <p>Ready to book your mehndi? Reach out via WhatsApp, Instagram, or email — I’d love to hear about your event.</p>
         </div>
 
-        <div class="row g-3 justify-content-center">
-          <!-- WhatsApp -->
-          <div class="col-md-4 col-sm-6 col-12 d-flex justify-content-center">
-            <div class="btn-wrap w-100">
-              <!-- TODO: replace 1XXXXXXXXXX with your full number (country code + number) -->
-              <a class="btn-contact btn-whatsapp"
-                 href="https://wa.me/14372251909?text=Hi%20Manpreet%2C%20I%27d%20like%20to%20book%20mehndi%20on%20[date].%20My%20location%20is%20[city]."
-                 target="_blank" rel="noopener"
-                 aria-label="Chat on WhatsApp"
-                 data-bs-toggle="tooltip" title="Message me on WhatsApp">
-                <i class="bx bxl-whatsapp"></i>
-                <span>WhatsApp</span>
-              </a>
+        <div class="row g-5 align-items-start contact-grid">
+          <!-- Left: sticky CTA buttons + quick facts -->
+          <div class="col-lg-5">
+            <div class="sticky-lg-top" style="top: 6rem;">
+              <div class="row g-3">
+                <!-- WhatsApp -->
+                <div class="col-12">
+                  <div class="btn-wrap w-100">
+                    <a class="btn-contact btn-whatsapp"
+                       href="https://wa.me/14372251909?text=Hi%20Manpreet%2C%20I%27d%20like%20to%20book%20mehndi%20on%20[date].%20My%20location%20is%20[city]."
+                       target="_blank" rel="noopener"
+                       aria-label="Chat on WhatsApp"
+                       data-bs-toggle="tooltip" title="Message me on WhatsApp">
+                      <i class="bx bxl-whatsapp"></i>
+                      <span>WhatsApp</span>
+                    </a>
+                  </div>
+                </div>
+                <!-- Instagram -->
+                <div class="col-12">
+                  <div class="btn-wrap w-100">
+                    <a class="btn-contact btn-instagram"
+                       href="https://instagram.com/YOUR_HANDLE"
+                       target="_blank" rel="noopener"
+                       aria-label="Visit Instagram profile"
+                       data-bs-toggle="tooltip" title="See designs on Instagram">
+                      <i class="bx bxl-instagram"></i>
+                      <span>Instagram</span>
+                    </a>
+                  </div>
+                </div>
+                <!-- Email -->
+                <div class="col-12">
+                  <div class="btn-wrap w-100">
+                    <a class="btn-contact btn-email"
+                       href="mailto:manpreetkaurbatth1@gmail.com?subject=Henna%20Booking%20Inquiry&body=Hi%20Manpreet%2C%0A%0AI%27d%20love%20to%20book%20henna%20on%20[date].%0ALocation%3A%20[city]%0AGuests%2FDesign%20style%3A%20[...]%0A%0AThanks!"
+                       aria-label="Send me an email"
+                       data-bs-toggle="tooltip" title="Email me">
+                      <i class="bx bx-envelope"></i>
+                      <span>Email</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- quick facts -->
+              <div class="mt-4 d-flex flex-wrap gap-2">
+                <span class="chip"><i class="bi bi-geo-alt me-1"></i> Ottawa • Nepean • Kanata • Orléans</span>
+                <span class="chip"><i class="bi bi-clock-history me-1"></i> Replies <strong>same day</strong></span>
+                <span class="chip"><i class="bi bi-flower3 me-1"></i> Bridal • Parties • Festivals</span>
+              </div>
             </div>
           </div>
 
-          <!-- Instagram -->
-          <div class="col-md-4 col-sm-6 col-12 d-flex justify-content-center">
-            <div class="btn-wrap w-100">
-              <!-- TODO: replace YOUR_HANDLE with your Instagram username -->
-              <a class="btn-contact btn-instagram"
-                 href="https://instagram.com/YOUR_HANDLE"
-                 target="_blank" rel="noopener"
-                 aria-label="Visit Instagram profile"
-                 data-bs-toggle="tooltip" title="See designs on Instagram">
-                <i class="bx bxl-instagram"></i>
-                <span>Instagram</span>
-              </a>
-            </div>
-          </div>
+          <!-- Right: Availability + FAQ -->
+          <div class="col-lg-7">
+            <!-- Quick quote bar -->
+            <div class="availability card-like" data-aos="fade-up" data-aos-delay="50">
+              <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+                <h3 class="h5 m-0">Pick a date & city</h3>
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                  <input id="cityInput" type="text" class="form-control form-control-sm"
+                         placeholder="Your city (e.g., Ottawa)"
+                         aria-label="City">
+                  <button id="clearSelection" type="button" class="btn btn-sm btn-outline-secondary">Clear</button>
+                </div>
+              </div>
 
-          <!-- Email -->
-          <div class="col-md-4 col-sm-6 col-12 d-flex justify-content-center">
-            <div class="btn-wrap w-100">
-              <a class="btn-contact btn-email"
-                 href="mailto:manpreetkaurbatth1@gmail.com?subject=Henna%20Booking%20Inquiry&body=Hi%20Manpreet%2C%0A%0AI%27d%20love%20to%20book%20henna%20on%20[date].%0ALocation%3A%20[city]%0AGuests%2FDesign%20style%3A%20[...]%0A%0AThanks!"
-                 aria-label="Send me an email"
-                 data-bs-toggle="tooltip" title="Email me">
-                <i class="bx bx-envelope"></i>
-                <span>Email</span>
-              </a>
+              <div class="avail-grid mt-3" id="availGrid" aria-live="polite"></div>
+
+              <div class="small text-muted mt-2">
+                Tip: selecting a date auto-fills the message in WhatsApp and Email above.
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
+
+            <!-- FAQ -->
+            <div class="mt-4" data-aos="fade-up" data-aos-delay="100">
+              <h3 class="h5 mb-3">FAQs</h3>
+              <div class="accordion" id="faqAccordion">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="faq1-h">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="true" aria-controls="faq1">
+                      How early should I book for bridal mehndi?
+                    </button>
+                  </h2>
+                  <div id="faq1" class="accordion-collapse collapse show" aria-labelledby="faq1-h" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                      Peak dates fill quickly — booking <strong>2-3 weeks</strong> ahead is ideal. Last-minute slots may be available; message me to check.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="faq2-h">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" aria-expanded="false" aria-controls="faq2">
+                      Do you travel on-site?
+                    </button>
+                  </h2>
+                  <div id="faq2" class="accordion-collapse collapse" aria-labelledby="faq2-h" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                      Yes — I travel across the Ottawa region. Travel fees depend on distance and time; share your location for a quick quote.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="faq3-h">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" aria-expanded="false" aria-controls="faq3">
+                      How do I get a dark stain?
+                    </button>
+                  </h2>
+                  <div id="faq3" class="accordion-collapse collapse" aria-labelledby="faq3-h" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                      Keep paste on skin for <strong>6–8 hours</strong>, avoid water initially, and apply natural oils afterward. Full color develops in <strong>24–48 hours</strong>.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /col -->
+        </div><!-- /row -->
+      </div><!-- /container -->
     </section>
     <!-- End Contact Section -->
 
@@ -717,6 +854,87 @@
       initPS();
     }
   })();
+  </script>
+
+  <!-- Availability picker: builds weekend dates & auto-fills contact links -->
+  <script>
+    (function () {
+      function formatDate(d) {
+        const opt = { weekday: 'short', month: 'short', day: 'numeric' };
+        return d.toLocaleDateString(undefined, opt);
+      }
+      function formatISO(d) {
+        return d.toISOString().split('T')[0]; // yyyy-mm-dd
+      }
+      function nextSaturday(from = new Date()) {
+        const d = new Date(from);
+        const day = d.getDay();                // 0..6
+        const add = (6 - day + 7) % 7;         // days until Saturday
+        d.setDate(d.getDate() + (add === 0 ? 7 : add));
+        d.setHours(12,0,0,0);
+        return d;
+      }
+
+      function buildWeekendList(weeks = 8) {
+        const items = [];
+        let sat = nextSaturday();
+        for (let i = 0; i < weeks; i++) {
+          const s = new Date(sat);
+          const sun = new Date(sat); sun.setDate(sun.getDate() + 1);
+          items.push(s, sun);
+          sat.setDate(sat.getDate() + 7);
+        }
+        return items;
+      }
+
+      function updateLinks(dateText, cityText) {
+        const w = document.querySelector('.btn-whatsapp');
+        const e = document.querySelector('.btn-email');
+        if (!w && !e) return;
+
+        const city = cityText && cityText.trim() ? cityText.trim() : '[city]';
+        const date = dateText && dateText.trim() ? dateText.trim() : '[date]';
+
+        const waMsg = `Hi Manpreet, I'd like to book mehndi on ${date}. My location is ${city}.`;
+        const mailBody = `Hi Manpreet,%0A%0AI'd love to book henna on ${encodeURIComponent(date)}.%0ALocation: ${encodeURIComponent(city)}%0AGuests/Design style: [...]%0A%0AThanks!`;
+
+        if (w) w.href = `https://wa.me/14372251909?text=${encodeURIComponent(waMsg)}`;
+        if (e) e.href = `mailto:manpreetkaurbatth1@gmail.com?subject=Henna%20Booking%20Inquiry&body=${mailBody}`;
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const grid = document.getElementById('availGrid');
+        const cityInput = document.getElementById('cityInput');
+        const clearBtn = document.getElementById('clearSelection');
+        if (!grid) return;
+
+        const weekends = buildWeekendList(8);
+        weekends.forEach(d => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'date-pill' + (d.getDay() === 0 || d.getDay() === 6 ? ' is-weekend' : '');
+          btn.dataset.iso = formatISO(d);
+          btn.textContent = formatDate(d);
+          btn.addEventListener('click', () => {
+            grid.querySelectorAll('.date-pill').forEach(el => el.classList.remove('active'));
+            btn.classList.add('active');
+            updateLinks(btn.textContent, cityInput?.value || '');
+          });
+          grid.appendChild(btn);
+        });
+
+        cityInput?.addEventListener('input', () => {
+          const active = grid.querySelector('.date-pill.active');
+          updateLinks(active ? active.textContent : '', cityInput.value);
+        });
+
+        clearBtn?.addEventListener('click', () => {
+          grid.querySelectorAll('.date-pill').forEach(el => el.classList.remove('active'));
+          if (cityInput) cityInput.value = '';
+          updateLinks('', '');
+        });
+      });
+    })();
   </script>
 
   <script>
