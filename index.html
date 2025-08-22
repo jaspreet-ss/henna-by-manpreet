@@ -417,28 +417,56 @@
     });
   });
 </script>
-<script src="https://unpkg.com/photoswipe@5/dist/photoswipe.umd.min.js"></script><script src="https://unpkg.com/photoswipe@5/dist/photoswipe-lightbox.umd.min.js"></script><script>
-(function() {
+
+<!-- PhotoSwipe (UMD) -->
+<script src="https://unpkg.com/photoswipe@5/dist/photoswipe.umd.min.js"></script>
+<script src="https://unpkg.com/photoswipe@5/dist/photoswipe-lightbox.umd.min.js"></script>
+<script>
+(function () {
   function initPS() {
     try {
       var galleryEl = document.querySelector('.pswp-gallery');
-      if (!galleryEl) return;
+      if (!galleryEl || typeof PhotoSwipeLightbox === 'undefined' || typeof PhotoSwipe === 'undefined') return;
+
+      // Build a static dataSource from your existing anchors
+      var links = Array.prototype.slice.call(galleryEl.querySelectorAll('a[href]'));
+      var dataSource = links.map(function (a) {
+        var w = parseInt(a.getAttribute('data-pswp-width'), 10);
+        var h = parseInt(a.getAttribute('data-pswp-height'), 10);
+        return {
+          src: a.getAttribute('href'),
+          width: isNaN(w) ? 0 : w,
+          height: isNaN(h) ? 0 : h,
+          msrc: (a.querySelector('img') || {}).src || undefined,
+          alt: (a.querySelector('img') || {}).alt || ''
+        };
+      });
 
       var lightbox = new PhotoSwipeLightbox({
-        gallery: galleryEl,
-        children: 'a',
+        // Pass the global class when using UMD build
         pswpModule: PhotoSwipe
       });
       lightbox.init();
+
+      // Intercept clicks and open PhotoSwipe programmatically
+      links.forEach(function (a, index) {
+        a.addEventListener('click', function (e) {
+          e.preventDefault();
+          lightbox.loadAndOpen(index, dataSource);
+        }, false);
+      });
     } catch (e) {
-      console && console.error('PhotoSwipe init failed:', e);
+      if (window.console) console.error('PhotoSwipe init failed:', e);
     }
   }
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initPS);
   } else {
     initPS();
   }
 })();
-</script></body>
+</script>
+
+</body>
 </html>
