@@ -31,7 +31,7 @@
   <!-- Custom styles -->
   <link href="assets/css/style-1.css" rel="stylesheet">
 
-  <!-- ===== Client Stories — refined, elegant styles (scoped) ===== -->
+  <!-- ===== Client Stories — refined, elegant styles (scoped) + click effects ===== -->
   <style>
     :root{
       --henna:#8c4a2f;
@@ -123,6 +123,8 @@
       box-shadow:0 20px 45px rgba(0,0,0,.08);
       border:1px solid rgba(0,0,0,.05);
       transition: transform .35s ease, box-shadow .35s ease;
+      cursor: pointer; /* indicate interactivity */
+      outline: none;
     }
     /* gradient ring */
     #testimonials .t-card::before{
@@ -152,6 +154,10 @@
     #testimonials .t-card:hover{
       transform: translateY(-6px);
       box-shadow:0 26px 65px rgba(0,0,0,.12);
+    }
+    /* subtle press state */
+    #testimonials .t-card:active{
+      transform: translateY(-2px) scale(.995);
     }
 
     /* Header */
@@ -201,9 +207,40 @@
       border:1px solid rgba(140,74,47,.18);
     }
 
-    /* Subtle focus ring for keyboard users */
-    #testimonials .t-card:focus-within{
-      outline:none; box-shadow:0 0 0 3px var(--ring), 0 22px 60px rgba(0,0,0,.1);
+    /* Focus ring for keyboard users */
+    #testimonials .t-card:focus-visible{
+      box-shadow:0 0 0 3px var(--ring), 0 22px 60px rgba(0,0,0,.1);
+    }
+
+    /* --- Click Effects --- */
+
+    /* ripple element injected by JS */
+    #testimonials .t-card .t-ripple{
+      position:absolute;
+      width:0; height:0;
+      left:0; top:0;
+      border-radius:50%;
+      transform: translate(-50%, -50%) scale(0);
+      background: radial-gradient(circle, rgba(194,123,92,.25) 0%, rgba(194,123,92,.18) 35%, rgba(194,123,92,0) 70%);
+      pointer-events:none;
+      animation: t-ripple-anim 720ms ease-out forwards;
+      filter: blur(.2px);
+    }
+    @keyframes t-ripple-anim{
+      0%{ opacity:.55; transform: translate(-50%,-50%) scale(0); }
+      100%{ opacity:0; transform: translate(-50%,-50%) scale(22); }
+    }
+
+    /* quick halo pulse on click */
+    #testimonials .t-card.t-clicked{
+      box-shadow:
+        0 0 0 0 rgba(194,123,92,.35),
+        0 24px 60px rgba(0,0,0,.14);
+      animation: t-pulse 520ms ease-out;
+    }
+    @keyframes t-pulse{
+      0%   { box-shadow: 0 0 0 0 rgba(194,123,92,.35), 0 24px 60px rgba(0,0,0,.14); }
+      100% { box-shadow: 0 0 0 18px rgba(194,123,92,0), 0 24px 60px rgba(0,0,0,.14); }
     }
   </style>
 </head>
@@ -235,11 +272,11 @@
     <div class="container" data-aos="zoom-in" data-aos-delay="100">
       <h1>Manpreet Kaur</h1>
       <p style="margin-left: 4px;">I'm a <span class="typed" data-typed-items="Traditional Mehndi Artist, Festival Henna Designer, Modern Mehndi Artist, Bridal Mehndi Designer, Party Henna Designer"></span></p>
-      <!-- <div class="social-links">
+      <div class="social-links">
         <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
         <a href="https://www.linkedin.com/in/singh-jass/" target="_blank" rel="noopener noreferrer" class="linkedin"><i class="bx bxl-linkedin"></i></a>
         <a href="https://github.com/jaspreet-ss/" target="_blank" rel="noopener noreferrer" class="github"><i class="bx bxl-github"></i></a>
-      </div> -->
+      </div>
     </div>
   </section><!-- End Hero -->
 
@@ -295,8 +332,7 @@
     </section>
     <!-- End About Section -->
 
-    <!-- ======= Testimonials Section ======= -->
-
+    <!-- ======= Testimonials Section (more elegant + click effects) ======= -->
     <section id="testimonials" class="testimonials section-bg">
       <div class="container">
         <div class="section-title">
@@ -989,6 +1025,55 @@
           var r = btn.getBoundingClientRect();
           btn.style.setProperty('--x', (e.clientX - r.left) + 'px');
           btn.style.setProperty('--y', (e.clientY - r.top) + 'px');
+        });
+      });
+    });
+  </script>
+
+  <!-- Click effects for Client Stories cards (ripple + pulse + keyboard support) -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var cards = document.querySelectorAll('#testimonials .t-card');
+      cards.forEach(function(card){
+        // make focusable for keyboard users
+        card.setAttribute('tabindex','0');
+
+        function triggerEffects(ev){
+          // ripple
+          var rect = card.getBoundingClientRect();
+          var x = (ev.clientX || (rect.left + rect.width/2)) - rect.left;
+          var y = (ev.clientY || (rect.top + rect.height/2)) - rect.top;
+          var ripple = document.createElement('span');
+          ripple.className = 't-ripple';
+          ripple.style.left = x + 'px';
+          ripple.style.top  = y + 'px';
+          card.appendChild(ripple);
+
+          // pulse halo
+          card.classList.add('t-clicked');
+          setTimeout(function(){
+            card.classList.remove('t-clicked');
+          }, 520);
+
+          // cleanup ripple
+          setTimeout(function(){
+            if (ripple && ripple.parentNode) ripple.parentNode.removeChild(ripple);
+          }, 760);
+        }
+
+        // pointer (mouse/touch/pen)
+        card.addEventListener('pointerdown', function(e){
+          // avoid right-click
+          if (e.button && e.button !== 0) return;
+          triggerEffects(e);
+        }, {passive:true});
+
+        // keyboard trigger
+        card.addEventListener('keydown', function(e){
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            triggerEffects(e);
+          }
         });
       });
     });
