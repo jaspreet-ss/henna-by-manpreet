@@ -424,7 +424,7 @@
       var lightbox = new PhotoSwipeLightbox({
         gallery: '.pswp-gallery',
         children: 'a',
-        pswpModule: PhotoSwipe
+        pswpModule: () => PhotoSwipe
       });
       lightbox.init();
     } catch (e) {
