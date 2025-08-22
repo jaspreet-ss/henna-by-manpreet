@@ -78,6 +78,78 @@
       pointer-events: none;
     }
     .masonry-item:hover .caption { opacity: 1; }
+
+    /* Contact section */
+    .contact-cta {
+      padding: 60px 0;
+    }
+
+    .contact-cta .btn-contact {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .6rem;
+      width: 100%;
+      min-height: 56px;
+      padding: 1rem 1.25rem;
+      font-weight: 700;
+      letter-spacing: .2px;
+      border: 0;
+      border-radius: 16px;
+      text-decoration: none;
+      color: #fff;
+      box-shadow: 0 12px 28px rgba(0,0,0,.14), inset 0 1px 0 rgba(255,255,255,.18);
+      transform: translateY(0);
+      transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-cta .btn-contact i {
+      font-size: 1.5rem;
+      line-height: 0;
+    }
+
+    /* Subtle interactive glow that follows the cursor */
+    .contact-cta .btn-contact::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at var(--x,50%) var(--y,50%), rgba(255,255,255,.35), transparent 40%);
+      opacity: 0;
+      transition: opacity .25s ease;
+      pointer-events: none;
+    }
+
+    .contact-cta .btn-contact:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 38px rgba(0,0,0,.2);
+      filter: brightness(1.02);
+    }
+
+    .contact-cta .btn-contact:hover::after { opacity: .5; }
+    .contact-cta .btn-contact:active { transform: translateY(0); }
+
+    /* Brand gradients */
+    .contact-cta .btn-whatsapp {
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: #fff;
+    }
+
+    .contact-cta .btn-instagram {
+      background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af, #515bd4);
+      color: #fff;
+    }
+
+    .contact-cta .btn-email {
+      background: linear-gradient(135deg, #ffd86f, #f9a825);
+      color: #1a1a1a;
+    }
+
+    .contact-cta .btn-email i { color: inherit; }
+
+    /* Layout tweaks */
+    .contact-cta .btn-wrap { max-width: 420px; }
   </style>
 </head>
 
@@ -97,6 +169,7 @@
         <li><a href="#testimonials" class="nav-link scrollto"><i class="bx bx-file-blank"></i> <span>Testimonials</span></a></li>
         <li><a href="#events" class="nav-link scrollto"><i class="bx bx-server"></i> <span>Events</span></a></li>
         <li><a href="#gallery" class="nav-link scrollto"><i class="bx bx-server"></i> <span>Gallery</span></a></li>
+        <li><a href="#contact" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Contact</span></a></li>
       </ul>
     </nav><!-- .nav-menu -->
 
@@ -346,6 +419,62 @@
     </section>
     <!-- End Gallery Section -->
 
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact-cta section-bg">
+      <div class="container" data-aos="fade-up">
+        <div class="section-title">
+          <h2>Contact Me</h2>
+          <p>Ready to book your mehndi? Reach out via WhatsApp, Instagram, or email — I’d love to hear about your event.</p>
+        </div>
+
+        <div class="row g-3 justify-content-center">
+          <!-- WhatsApp -->
+          <div class="col-md-4 col-sm-6 col-12 d-flex justify-content-center">
+            <div class="btn-wrap w-100">
+              <!-- TODO: replace 1XXXXXXXXXX with your full number (country code + number) -->
+              <a class="btn-contact btn-whatsapp"
+                 href="https://wa.me/14372251909?text=Hi%20Manpreet%2C%20I%27d%20like%20to%20book%20mehndi%20on%20[date].%20My%20location%20is%20[city]."
+                 target="_blank" rel="noopener"
+                 aria-label="Chat on WhatsApp"
+                 data-bs-toggle="tooltip" title="Message me on WhatsApp">
+                <i class="bx bxl-whatsapp"></i>
+                <span>WhatsApp</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Instagram -->
+          <div class="col-md-4 col-sm-6 col-12 d-flex justify-content-center">
+            <div class="btn-wrap w-100">
+              <!-- TODO: replace YOUR_HANDLE with your Instagram username -->
+              <a class="btn-contact btn-instagram"
+                 href="https://instagram.com/YOUR_HANDLE"
+                 target="_blank" rel="noopener"
+                 aria-label="Visit Instagram profile"
+                 data-bs-toggle="tooltip" title="See designs on Instagram">
+                <i class="bx bxl-instagram"></i>
+                <span>Instagram</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="col-md-4 col-sm-6 col-12 d-flex justify-content-center">
+            <div class="btn-wrap w-100">
+              <a class="btn-contact btn-email"
+                 href="mailto:manpreetkaurbatth1@gmail.com?subject=Henna%20Booking%20Inquiry&body=Hi%20Manpreet%2C%0A%0AI%27d%20love%20to%20book%20henna%20on%20[date].%0ALocation%3A%20[city]%0AGuests%2FDesign%20style%3A%20[...]%0A%0AThanks!"
+                 aria-label="Send me an email"
+                 data-bs-toggle="tooltip" title="Email me">
+                <i class="bx bx-envelope"></i>
+                <span>Email</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Contact Section -->
+
   </main><!-- End #main -->
 
   <div id="preloader"></div>
@@ -582,6 +711,22 @@
       initPS();
     }
   })();
+  </script>
+
+  <script>
+    // Enable Bootstrap tooltips and cursor-follow glow for contact buttons
+    document.addEventListener('DOMContentLoaded', function () {
+      var tipTriggers = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+      tipTriggers.forEach(function (el) { new bootstrap.Tooltip(el); });
+
+      document.querySelectorAll('.btn-contact').forEach(function (btn) {
+        btn.addEventListener('pointermove', function (e) {
+          var r = btn.getBoundingClientRect();
+          btn.style.setProperty('--x', (e.clientX - r.left) + 'px');
+          btn.style.setProperty('--y', (e.clientY - r.top) + 'px');
+        });
+      });
+    });
   </script>
 
 </body>
