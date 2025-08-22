@@ -28,6 +28,57 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
+  <!-- Gallery masonry styles -->
+  <style>
+    /* Beautiful, responsive masonry without equal squares */
+    .masonry {
+      column-count: 4;
+      column-gap: 1rem;
+    }
+    @media (max-width: 1200px) { .masonry { column-count: 3; } }
+    @media (max-width: 992px) { .masonry { column-count: 2; } }
+    @media (max-width: 576px) { .masonry { column-count: 1; } }
+
+    .masonry-item { /* each tile */
+      break-inside: avoid;
+      -webkit-column-break-inside: avoid;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .masonry-item a {
+      display: block;
+      overflow: hidden;
+      border-radius: 18px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+      background: #fff;
+    }
+
+    .masonry-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform .35s ease;
+    }
+
+    .masonry-item a:hover img {
+      transform: scale(1.03);
+    }
+
+    /* Optional subtle caption on hover (can be removed) */
+    .masonry-item .caption {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      padding: .5rem .75rem;
+      font-size: .9rem;
+      color: #fff;
+      background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.65) 100%);
+      opacity: 0; transition: opacity .25s ease;
+      border-radius: 0 0 18px 18px;
+      pointer-events: none;
+    }
+    .masonry-item:hover .caption { opacity: 1; }
+  </style>
 </head>
 
 <body>
@@ -174,7 +225,7 @@
             <i class="bx bxs-quote-alt-right quote-icon-right"></i>
               </p>
               <h3>Leila S.</h3>
-              <h4>Event Guest</h4>
+            <h4>Event Guest</h4>
             </div>
           </div>
 
@@ -259,22 +310,42 @@
       </div>
     </section><!-- End Events Section -->
 
+    <!-- ======= Gallery Section (updated to 15-image masonry) ======= -->
     <section class="gallary section-bg" id="gallery">
       <div class="container">
         <div class="section-title">
           <h2>Gallery</h2>
           <p>Hand-drawn henna designs — bridal sets, simple motifs, and custom requests.</p>
         </div>
-        <div class="pswp-gallery row gallery">
-          <div class="col-lg-4 col-md-6 gallery-item"><a data-pswp-height="900" data-pswp-width="1200"
-              href="assets/img/events/Event-1.jpg"><img alt="Henna1" class="img-fluid" src="assets/img/events/Event-1.jpg" /></a></div>
-          <div class="col-lg-4 col-md-6 gallery-item"><a data-pswp-height="900" data-pswp-width="1200"
-              href="assets/img/events/Event-2.jpg"><img alt="Henna2" class="img-fluid" src="assets/img/events/Event-2.jpg" /></a></div>
-          <div class="col-lg-4 col-md-6 gallery-item"><a data-pswp-height="900" data-pswp-width="1200"
-              href="assets/img/events/Event-3.jpg"><img alt="Henna3" class="img-fluid" src="assets/img/events/Event-3.jpg" /></a></div>
+
+        <!--
+          ✔ Drop 15 images into assets/img/gallery/
+          ✔ Update filenames below if yours differ
+          ✔ No forced squares. Natural aspect ratios for a beautiful canvas.
+        -->
+        <div class="pswp-gallery masonry" id="gallery-grid">
+          <div class="masonry-item"><a href="assets/img/gallery/henna-01.jpg"><img alt="Bridal mehndi detail 01" src="assets/img/gallery/henna-01.jpg" loading="lazy"></a></div>
+          <div class="masonry-item"><a href="assets/img/gallery/henna-02.jpg"><img alt="Intricate floral mandala" src="assets/img/gallery/henna-02.jpg" loading="lazy"></a></div>
+          <div class="masonry-item"><a href="assets/img/gallery/henna-03.jpg"><img alt="Peacock-inspired motif" src="assets/img/gallery/henna-03.jpg" loading="lazy"></a><span class="caption">Peacock elegance</span></div>
+          <div class="masonry-item"><a href="assets/img/gallery/henna-04.jpg"><img alt="Minimal modern design" src="assets/img/gallery/henna-04.jpg" loading="lazy"></a></div>
+          <div class="masonry-item"><a href="assets/img/gallery/henna-05.jpg"><img alt="Full-hand bridal set" src="assets/img/gallery/henna-05.jpg" loading="lazy"></a><span class="caption">Full-hand bridal</span></div>
+          <div class="masonry-item"><a href="assets/img/gallery/henna-06.jpg"><img alt="Delicate finger trails" src="assets/img/gallery/henna-06.jpg" loading="lazy"></a></div>
+          <div class="masonry-item"><a href="assets/img/gallery/henna-07.jpg"><img alt="Symmetrical vines" src="assets/img/gallery/henna-07.jpg" loading="lazy"></a></div>
+          <div class="masonry-item"><a href="assets/img/gallery/henna-08.jpg"><img alt="Bridal feet mehndi" src="assets/img/gallery/henna-08.jpg" loading="lazy"></a><span class="caption">Bridal feet</span></div>
+          <div class="masonry-item"><a href="assets/img/gallery/henna-09.jpg"><img alt="Rose and leaves" src="assets/img/gallery/henna-09.jpg" loading="lazy"></a></div>
+          <div class="masonry-item"><a href="assets/img/gallery/henna-10.jpg"><img alt="Traditional paisley flow" src="assets/img/gallery/henna-10.jpg" loading="lazy"></a></div>
+          <div class="masonry-item"><a href="assets/img/gallery/henna-11.jpg"><img alt="Arabic style strip" src="assets/img/gallery/henna-11.jpg" loading="lazy"></a></div>
+          <div class="masonry-item"><a href="assets/img/gallery/henna-12.jpg"><img alt="Mandala center" src="assets/img/gallery/henna-12.jpg" loading="lazy"></a></div>
+          <div class="masonry-item"><a href="assets/img/gallery/henna-13.jpg"><img alt="Festival quick design" src="assets/img/gallery/henna-13.jpg" loading="lazy"></a></div>
+          <div class="masonry-item"><a href="assets/img/gallery/henna-14.jpg"><img alt="Fine lacework" src="assets/img/gallery/henna-14.jpg" loading="lazy"></a></div>
+          <div class="masonry-item"><a href="assets/img/gallery/henna-15.jpg"><img alt="Bold geometric bands" src="assets/img/gallery/henna-15.jpg" loading="lazy"></a></div>
+          <div class="masonry-item"><a href="assets/img/gallery/henna-16.jpg"><img alt="Bold geometric bands" src="assets/img/gallery/henna-15.jpg" loading="lazy"></a></div>
+          <div class="masonry-item"><a href="assets/img/gallery/henna-17.jpg"><img alt="Bold geometric bands" src="assets/img/gallery/henna-15.jpg" loading="lazy"></a></div>
         </div>
       </div>
     </section>
+    <!-- End Gallery Section -->
+
   </main><!-- End #main -->
 
   <div id="preloader"></div>
@@ -412,103 +483,106 @@
     });
   </script>
 
-<!-- PhotoSwipe (UMD) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.8/umd/photoswipe.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.8/umd/photoswipe-lightbox.umd.min.js"></script>
-<script>
-(function () {
-  function initPS() {
-    try {
-      const galleryEl = document.querySelector('.pswp-gallery');
-      if (!galleryEl || typeof PhotoSwipeLightbox === 'undefined' || typeof PhotoSwipe === 'undefined') return;
+  <!-- PhotoSwipe (UMD) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.8/umd/photoswipe.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.8/umd/photoswipe-lightbox.umd.min.js"></script>
+  <script>
+  (function () {
+    function initPS() {
+      try {
+        const galleryEl = document.querySelector('.pswp-gallery');
+        if (!galleryEl || typeof PhotoSwipeLightbox === 'undefined' || typeof PhotoSwipe === 'undefined') return;
 
-      const links = Array.from(galleryEl.querySelectorAll('a[href]'));
+        const links = Array.from(galleryEl.querySelectorAll('a[href]'));
 
-      // Build dataSource; sizes filled asynchronously
-      const dataSource = links.map(a => {
-        const thumb = a.querySelector('img');
-        return {
-          src: a.getAttribute('href'),
-          msrc: thumb ? thumb.src : undefined,
-          alt:  thumb ? (thumb.alt || '') : '',
-          width: 0,
-          height: 0
-        };
-      });
-
-      // Helper: fetch intrinsic size once per item
-      function fetchSizeFor(i, cb) {
-        const item = dataSource[i];
-        if (!item || (item.width > 0 && item.height > 0)) { cb && cb(); return; }
-        const img = new Image();
-        img.onload = function () {
-          item.width  = img.naturalWidth  || 1;
-          item.height = img.naturalHeight || 1;
-          cb && cb();
-        };
-        img.onerror = function(){ cb && cb(); };
-        img.src = item.src;
-      }
-
-      // Precompute sizes in the background (helps when swiping)
-      dataSource.forEach((_, i) => fetchSizeFor(i));
-
-      const lightbox = new PhotoSwipeLightbox({
-        pswpModule: PhotoSwipe,
-        initialZoomLevel: 'fit'   // open fully contained
-      });
-
-      lightbox.init();
-
-      // Ensure current + neighbors have sizes before opening
-      function openAt(index) {
-        let remaining = 0;
-        function need(i) {
-          if (i < 0 || i >= dataSource.length) return;
-          remaining++;
-          fetchSizeFor(i, () => { if (--remaining === 0) lightbox.loadAndOpen(index, dataSource); });
-        }
-        // Kick off current and neighbors
-        need(index);
-        need(index - 1);
-        need(index + 1);
-        // If none queued (edge case), open immediately
-        if (remaining === 0) lightbox.loadAndOpen(index, dataSource);
-      }
-
-      // Clicks
-      links.forEach((a, index) => {
-        a.addEventListener('click', function (e) {
-          e.preventDefault();
-          openAt(index);
-        }, false);
-      });
-
-      // When slide changes, if size still unknown, fix & refresh layout
-      lightbox.on('change', () => {
-        const pswp = lightbox.pswp;
-        const i = pswp.currIndex;
-        const item = dataSource[i];
-        if (item.width > 0 && item.height > 0) return;
-
-        fetchSizeFor(i, () => {
-          pswp.invalidateCurrItems();   // tell PS sizes changed
-          pswp.updateSize(true);        // re-measure & re-layout
+        // Build dataSource; sizes filled asynchronously
+        const dataSource = links.map(a => {
+          const thumb = a.querySelector('img');
+          // If you know intrinsic sizes, you can set data-pswp-width/height on <a>
+          const w = parseInt(a.getAttribute('data-pswp-width') || '0', 10);
+          const h = parseInt(a.getAttribute('data-pswp-height') || '0', 10);
+          return {
+            src: a.getAttribute('href'),
+            msrc: thumb ? thumb.src : undefined,
+            alt:  thumb ? (thumb.alt || '') : '',
+            width: isNaN(w) ? 0 : w,
+            height: isNaN(h) ? 0 : h
+          };
         });
-      });
 
-    } catch (e) {
-      console.error('PhotoSwipe init failed:', e);
+        // Helper: fetch intrinsic size once per item
+        function fetchSizeFor(i, cb) {
+          const item = dataSource[i];
+          if (!item || (item.width > 0 && item.height > 0)) { cb && cb(); return; }
+          const img = new Image();
+          img.onload = function () {
+            item.width  = img.naturalWidth  || 1;
+            item.height = img.naturalHeight || 1;
+            cb && cb();
+          };
+          img.onerror = function(){ cb && cb(); };
+          img.src = item.src;
+        }
+
+        // Precompute sizes in the background (helps when swiping)
+        dataSource.forEach((_, i) => fetchSizeFor(i));
+
+        const lightbox = new PhotoSwipeLightbox({
+          pswpModule: PhotoSwipe,
+          initialZoomLevel: 'fit'   // open fully contained
+        });
+
+        lightbox.init();
+
+        // Ensure current + neighbors have sizes before opening
+        function openAt(index) {
+          let remaining = 0;
+          function need(i) {
+            if (i < 0 || i >= dataSource.length) return;
+            remaining++;
+            fetchSizeFor(i, () => { if (--remaining === 0) lightbox.loadAndOpen(index, dataSource); });
+          }
+          // Kick off current and neighbors
+          need(index);
+          need(index - 1);
+          need(index + 1);
+          // If none queued (edge case), open immediately
+          if (remaining === 0) lightbox.loadAndOpen(index, dataSource);
+        }
+
+        // Clicks
+        links.forEach((a, index) => {
+          a.addEventListener('click', function (e) {
+            e.preventDefault();
+            openAt(index);
+          }, false);
+        });
+
+        // When slide changes, if size still unknown, fix & refresh layout
+        lightbox.on('change', () => {
+          const pswp = lightbox.pswp;
+          const i = pswp.currIndex;
+          const item = dataSource[i];
+          if (item.width > 0 && item.height > 0) return;
+
+          fetchSizeFor(i, () => {
+            pswp.invalidateCurrItems();   // tell PS sizes changed
+            pswp.updateSize(true);        // re-measure & re-layout
+          });
+        });
+
+      } catch (e) {
+        console.error('PhotoSwipe init failed:', e);
+      }
     }
-  }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initPS);
-  } else {
-    initPS();
-  }
-})();
-</script>
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initPS);
+    } else {
+      initPS();
+    }
+  })();
+  </script>
 
 </body>
 </html>
