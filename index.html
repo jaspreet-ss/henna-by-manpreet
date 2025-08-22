@@ -421,10 +421,13 @@
 (function() {
   function initPS() {
     try {
+      var galleryEl = document.querySelector('.pswp-gallery');
+      if (!galleryEl) return;
+
       var lightbox = new PhotoSwipeLightbox({
-        gallery: '.pswp-gallery',
+        gallery: galleryEl,
         children: 'a',
-        pswpModule: () => PhotoSwipe
+        pswpModule: PhotoSwipe
       });
       lightbox.init();
     } catch (e) {
