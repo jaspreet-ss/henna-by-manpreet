@@ -30,6 +30,182 @@
 
   <!-- Custom styles -->
   <link href="assets/css/style-1.css" rel="stylesheet">
+
+  <!-- ===== Client Stories — refined, elegant styles (scoped) ===== -->
+  <style>
+    :root{
+      --henna:#8c4a2f;
+      --henna-2:#c27b5c;
+      --card:#ffffff;
+      --ink:#1d1d1f;
+      --muted:rgba(0,0,0,.58);
+      --ring:rgba(194,123,92,.20);
+    }
+
+    /* Section backdrop with soft mehndi-inspired motif */
+    #testimonials{
+      position: relative;
+      overflow: clip;
+      background:
+        radial-gradient(80rem 80rem at -10% -20%, rgba(194,123,92,.08), transparent 60%),
+        radial-gradient(60rem 60rem at 110% 120%, rgba(140,74,47,.06), transparent 55%);
+      isolation:isolate;
+    }
+    #testimonials::before,
+    #testimonials::after{
+      content:"";
+      position:absolute;
+      inset:auto auto -6rem -6rem;
+      width:22rem;height:22rem;
+      background:
+        radial-gradient(closest-side, rgba(194,123,92,.10), transparent 70%),
+        repeating-conic-gradient(from 0deg, rgba(140,74,47,.08) 0 14deg, transparent 14deg 28deg);
+      filter: blur(2px) saturate(110%);
+      border-radius:50%;
+      z-index:0;
+      transform:rotate(12deg);
+    }
+    #testimonials::after{
+      inset:-6rem -6rem auto auto;
+      transform:rotate(-18deg);
+    }
+
+    /* Ornamental divider under heading */
+    #testimonials .section-title{
+      position:relative;
+      z-index:1;
+    }
+    #testimonials .section-title .t-divider{
+      display:flex;
+      align-items:center;
+      gap:.5rem;
+      margin-top:.75rem;
+      justify-content:center;
+      opacity:.9;
+    }
+    #testimonials .t-divider::before,
+    #testimonials .t-divider::after{
+      content:"";
+      height:1px;
+      flex:1 1 120px;
+      background:linear-gradient(90deg, transparent, rgba(140,74,47,.35), transparent);
+    }
+    #testimonials .t-divider i{
+      font-size:1.1rem;
+      color:var(--henna);
+      background:#fff;
+      border-radius:50%;
+      padding:.15rem .35rem;
+      box-shadow:0 2px 10px rgba(0,0,0,.06);
+    }
+
+    /* Responsive grid */
+    #testimonials .t-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:1.25rem;
+      position:relative;
+      z-index:1;
+    }
+    @media (min-width: 576px){
+      #testimonials .t-grid{ grid-template-columns: repeat(2,minmax(0,1fr)); }
+    }
+    @media (min-width: 1200px){
+      #testimonials .t-grid{ grid-template-columns: repeat(3,minmax(0,1fr)); }
+    }
+
+    /* Elegant card with gradient ring border + subtle texture */
+    #testimonials .t-card{
+      position:relative;
+      background: var(--card);
+      border-radius:22px;
+      padding:1.1rem 1.1rem .95rem;
+      box-shadow:0 20px 45px rgba(0,0,0,.08);
+      border:1px solid rgba(0,0,0,.05);
+      transition: transform .35s ease, box-shadow .35s ease;
+    }
+    /* gradient ring */
+    #testimonials .t-card::before{
+      content:"";
+      position:absolute; inset:0;
+      padding:1px; border-radius:22px;
+      background: conic-gradient(from 140deg, rgba(194,123,92,.35), rgba(140,74,47,.35), rgba(194,123,92,.15), transparent 60%);
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
+      pointer-events:none;
+    }
+    /* top corner flourish */
+    #testimonials .t-card::after{
+      content:"";
+      position:absolute; right:-24px; top:-24px;
+      width:160px;height:160px;
+      background:
+        radial-gradient(closest-side, rgba(194,123,92,.18), transparent 70%),
+        conic-gradient(from 200deg, rgba(140,74,47,.18), transparent 40%);
+      border-radius:50%;
+      filter: blur(1px);
+      pointer-events:none;
+    }
+    #testimonials .t-card:hover{
+      transform: translateY(-6px);
+      box-shadow:0 26px 65px rgba(0,0,0,.12);
+    }
+
+    /* Header */
+    #testimonials .t-head{
+      display:flex; align-items:center; gap:.9rem;
+      margin-bottom:.35rem;
+    }
+    #testimonials .avatar{
+      width:52px;height:52px;border-radius:50%;
+      display:grid; place-items:center;
+      font-weight:800; letter-spacing:.5px; color:#fff;
+      background: conic-gradient(from 120deg, var(--henna), var(--henna-2));
+      box-shadow:0 10px 20px rgba(140,74,47,.35);
+      position:relative; isolation:isolate;
+    }
+    /* delicate ring on avatar */
+    #testimonials .avatar::after{
+      content:""; position:absolute; inset:-3px;
+      border-radius:inherit;
+      background: conic-gradient(from 0deg, rgba(255,255,255,.75), rgba(255,255,255,0));
+      -webkit-mask: radial-gradient(closest-side, transparent 72%, #000 72%);
+      pointer-events:none;
+    }
+    #testimonials .t-name{ margin:0; font-weight:800; color:var(--ink); line-height:1.15;}
+    #testimonials .t-role{ margin:0; font-size:.92rem; color:var(--muted); }
+    #testimonials .rating i{ color:#f4c44f; font-size:1.05rem; }
+
+    /* Quote body */
+    #testimonials blockquote{
+      margin:.35rem 0 0; color:#252525; font-size:1.04rem; line-height:1.6;
+      position:relative; padding:.35rem 0 0 .15rem;
+    }
+    #testimonials blockquote .lead-mark{
+      position:absolute; left:-2px; top:-10px;
+      font-size:1.8rem; color:rgba(0,0,0,.12);
+    }
+
+    /* Footer chips */
+    #testimonials .t-footer{
+      margin-top:.75rem; display:flex; flex-wrap:wrap; gap:.5rem; align-items:center;
+      color:var(--muted); font-size:.92rem;
+    }
+    #testimonials .chip{
+      border-radius:999px; padding:.28rem .6rem; font-weight:600; font-size:.8rem;
+      background: rgba(140,74,47,.08);
+      color:var(--henna);
+      border:1px solid rgba(140,74,47,.18);
+    }
+
+    /* Subtle focus ring for keyboard users */
+    #testimonials .t-card:focus-within{
+      outline:none; box-shadow:0 0 0 3px var(--ring), 0 22px 60px rgba(0,0,0,.1);
+    }
+  </style>
 </head>
 
 <body>
@@ -125,88 +301,144 @@
       <div class="container">
         <div class="section-title">
           <h2>Client Stories</h2>
-          <p>Every design carries a story. Here’s what clients have shared about their mehndi experience.</p>
+          <p>Heartfelt words from brides, families, and festival guests — captured after the stain set deep and the smiles did too.</p>
+          <div class="t-divider" aria-hidden="true">
+            <i class="bi bi-flower3"></i>
+          </div>
         </div>
 
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="testimonial-item" data-aos="fade-up">
-              <p>
-                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-            My bridal mehndi was breathtaking! The details were incredible and stayed dark for days. 
-            Everyone complimented the designs and I felt so special.
-            <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-              </p>
-              <h3>Amira K.</h3>
-              <h4>Bride</h4>
+        <div class="t-grid">
+          <!-- 1 -->
+          <article class="t-card" data-aos="fade-up">
+            <div class="t-head">
+              <div class="avatar" aria-hidden="true">A</div>
+              <div>
+                <p class="t-name">Amira K.</p>
+                <p class="t-role">Bride</p>
+              </div>
+              <div class="ms-auto rating" aria-label="5 out of 5">
+                <i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i>
+              </div>
             </div>
-          </div>
-
-          <div class="col-lg-6">
-            <div class="testimonial-item" data-aos="fade-up" data-aos-delay="100">
-              <p>
-                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-            We booked for a family festival and everyone loved their henna! 
-            From kids to elders, each design was unique and done with patience and care.
-            <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-              </p>
-              <h3>Ravi P.</h3>
-              <h4>Festival Guest</h4>
+            <blockquote>
+              <i class="bx bxs-quote-alt-left lead-mark"></i>
+              My bridal mehndi was breathtaking! The details were incredible and stayed dark for days. Everyone complimented the designs and I felt so special.
+            </blockquote>
+            <div class="t-footer">
+              <span class="chip"><i class="bi bi-flower3 me-1"></i>Bridal</span>
+              <span class="chip"><i class="bi bi-calendar2-check me-1"></i>Wedding</span>
             </div>
-          </div>
+          </article>
 
-          <div class="col-lg-6">
-            <div class="testimonial-item" data-aos="fade-up" data-aos-delay="200">
-              <p>
-                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-            I wanted a modern and minimal style for my engagement. 
-            The artist created exactly what I envisioned — elegant and timeless!
-            <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-              </p>
-              <h3>Sana R.</h3>
-              <h4>Engagement</h4>
+          <!-- 2 -->
+          <article class="t-card" data-aos="fade-up" data-aos-delay="60">
+            <div class="t-head">
+              <div class="avatar" aria-hidden="true">R</div>
+              <div>
+                <p class="t-name">Ravi P.</p>
+                <p class="t-role">Festival Guest</p>
+              </div>
+              <div class="ms-auto rating" aria-label="5 out of 5">
+                <i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i>
+              </div>
             </div>
-          </div>
-
-          <div class="col-lg-6">
-            <div class="testimonial-item" data-aos="fade-up" data-aos-delay="300">
-              <p>
-                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-            Truly professional and creative! The designs were neat, symmetrical, 
-            and applied so quickly without losing quality. Highly recommended!
-            <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-              </p>
-              <h3>Leila S.</h3>
-            <h4>Event Guest</h4>
+            <blockquote>
+              <i class="bx bxs-quote-alt-left lead-mark"></i>
+              We booked for a family festival and everyone loved their henna! From kids to elders, each design was unique and done with patience and care.
+            </blockquote>
+            <div class="t-footer">
+              <span class="chip"><i class="bi bi-people me-1"></i>Family</span>
+              <span class="chip"><i class="bi bi-balloon-heart me-1"></i>Festival</span>
             </div>
-          </div>
+          </article>
 
-          <div class="col-lg-6">
-            <div class="testimonial-item" data-aos="fade-up" data-aos-delay="300">
-              <p>
-                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-            We had mehndi done for my baby shower, and it added such a beautiful, joyful touch to the celebration! 
-            The designs were delicate yet festive, and everyone was impressed.
-            <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-              </p>
-              <h3>Nisha T.</h3>
-              <h4>Baby Shower Host</h4>
+          <!-- 3 -->
+          <article class="t-card" data-aos="fade-up" data-aos-delay="120">
+            <div class="t-head">
+              <div class="avatar" aria-hidden="true">S</div>
+              <div>
+                <p class="t-name">Sana R.</p>
+                <p class="t-role">Engagement</p>
+              </div>
+              <div class="ms-auto rating" aria-label="5 out of 5">
+                <i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i>
+              </div>
             </div>
-          </div>
-
-          <div class="col-lg-6">
-            <div class="testimonial-item" data-aos="fade-up" data-aos-delay="300">
-              <p>
-                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-            I booked for my best friend’s wedding party, and the whole group loved the experience. 
-            The artist was warm, creative, and tailored each design to match our personalities. Truly memorable!
-            <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-              </p>
-              <h3>Farah M.</h3>
-              <h4>Bridesmaid</h4>
+            <blockquote>
+              <i class="bx bxs-quote-alt-left lead-mark"></i>
+              I wanted a modern and minimal style for my engagement. The artist created exactly what I envisioned — elegant and timeless!
+            </blockquote>
+            <div class="t-footer">
+              <span class="chip"><i class="bi bi-heart me-1"></i>Engagement</span>
+              <span class="chip"><i class="bi bi-stars me-1"></i>Minimal</span>
             </div>
-          </div>
+          </article>
 
+          <!-- 4 -->
+          <article class="t-card" data-aos="fade-up" data-aos-delay="180">
+            <div class="t-head">
+              <div class="avatar" aria-hidden="true">L</div>
+              <div>
+                <p class="t-name">Leila S.</p>
+                <p class="t-role">Event Guest</p>
+              </div>
+              <div class="ms-auto rating" aria-label="5 out of 5">
+                <i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i>
+              </div>
+            </div>
+            <blockquote>
+              <i class="bx bxs-quote-alt-left lead-mark"></i>
+              Truly professional and creative! The designs were neat, symmetrical, and applied so quickly without losing quality. Highly recommended!
+            </blockquote>
+            <div class="t-footer">
+              <span class="chip"><i class="bi bi-award me-1"></i>Professional</span>
+              <span class="chip"><i class="bi bi-rulers me-1"></i>Symmetry</span>
+            </div>
+          </article>
+
+          <!-- 5 -->
+          <article class="t-card" data-aos="fade-up" data-aos-delay="240">
+            <div class="t-head">
+              <div class="avatar" aria-hidden="true">N</div>
+              <div>
+                <p class="t-name">Nisha T.</p>
+                <p class="t-role">Baby Shower Host</p>
+              </div>
+              <div class="ms-auto rating" aria-label="5 out of 5">
+                <i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i>
+              </div>
+            </div>
+            <blockquote>
+              <i class="bx bxs-quote-alt-left lead-mark"></i>
+              We had mehndi done for my baby shower, and it added such a beautiful, joyful touch to the celebration! The designs were delicate yet festive, and everyone was impressed.
+            </blockquote>
+            <div class="t-footer">
+              <span class="chip"><i class="bi bi-balloon me-1"></i>Baby Shower</span>
+              <span class="chip"><i class="bi bi-emoji-smile me-1"></i>Joyful</span>
+            </div>
+          </article>
+
+          <!-- 6 -->
+          <article class="t-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="t-head">
+              <div class="avatar" aria-hidden="true">F</div>
+              <div>
+                <p class="t-name">Farah M.</p>
+                <p class="t-role">Bridesmaid</p>
+              </div>
+              <div class="ms-auto rating" aria-label="5 out of 5">
+                <i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i>
+              </div>
+            </div>
+            <blockquote>
+              <i class="bx bxs-quote-alt-left lead-mark"></i>
+              I booked for my best friend’s wedding party, and the whole group loved the experience. The artist was warm, creative, and tailored each design to match our personalities. Truly memorable!
+            </blockquote>
+            <div class="t-footer">
+              <span class="chip"><i class="bi bi-people-fill me-1"></i>Group</span>
+              <span class="chip"><i class="bi bi-brush me-1"></i>Creative</span>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -227,8 +459,6 @@
             <div class="icon-box">
               <!-- <div class="icon"> -->
               <img src="assets/img/events/Event-1.jpg" class="img-fluid" alt="">
-              <!-- <i class="bx bxl-dribbble"></i> -->
-              <!-- </div> -->
               <h4><a href="">Bridal Mehndi</a></h4>
               <p>Exquisite full-hand and full-leg bridal designs tailored for your big day.</p>
             </div>
@@ -236,10 +466,7 @@
 
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
             <div class="icon-box iconbox-orange ">
-              <!-- <div class="icon"> -->
               <img src="assets/img/events/Event-2.jpg" class="img-fluid" alt="">
-              <!-- <i class="bx bx-file"></i> -->
-              <!-- </div> -->
               <h4><a href="">Party/Festival Mehndi</a></h4>
               <p>Quick, stylish, and elegant designs perfect for birthdays, engagements, and casual gatherings. Traditional and modern patterns for Eid, Karva Chauth, Diwali, and more.</p>
             </div>
@@ -247,15 +474,11 @@
 
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0" data-aos="zoom-in" data-aos-delay="300">
             <div class="icon-box iconbox-pink">
-              <!-- <div class="icon"> -->
               <img src="assets/img/events/Event-3.jpg" class="img-fluid" alt="">
-              <!-- <i class="bx bx-tachometer"></i> -->
-              <!-- </div> -->
               <h4><a href="">Custom Designs</a></h4>
               <p>Personalized henna art crafted to match your style and story.</p>
             </div>
           </div>
-
 
         </div>
 
@@ -270,11 +493,6 @@
           <p>Hand-drawn henna designs — bridal sets, simple motifs, and custom requests.</p>
         </div>
 
-        <!--
-          ✔ Drop 15 images into assets/img/gallery/
-          ✔ Update filenames below if yours differ
-          ✔ No forced squares. Natural aspect ratios for a beautiful canvas.
-        -->
         <div class="pswp-gallery masonry" id="gallery-grid">
           <div class="masonry-item"><a href="assets/img/gallery/henna-01.jpg"><img alt="Bridal mehndi detail 01" src="assets/img/gallery/henna-01.jpg" loading="lazy"></a></div>
           <div class="masonry-item"><a href="assets/img/gallery/henna-02.jpg"><img alt="Intricate floral mandala" src="assets/img/gallery/henna-02.jpg" loading="lazy"></a></div>
