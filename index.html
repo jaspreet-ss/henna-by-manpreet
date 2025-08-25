@@ -758,7 +758,7 @@
       if (basePath && !basePath.endsWith("/")) basePath += "/";
 
       function pickRandomUrl() {
-        var n = Math.floor(Math.random() * 10) + 1; // 1..10
+        var n = Math.floor(Math.random() * 20) + 1; // 1..20
         return basePath + "background-" + n + ".png";
       }
 
@@ -815,7 +815,7 @@
 
       var basePath = "assets/img/backgrounds/";
       function pickRandomUrl() {
-        var n = Math.floor(Math.random() * 10) + 1;
+        var n = Math.floor(Math.random() * 20) + 1;
         return basePath + "background-" + n + ".png";
       }
 
