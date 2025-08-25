@@ -243,9 +243,59 @@
       100% { box-shadow: 0 0 0 18px rgba(194,123,92,0), 0 24px 60px rgba(0,0,0,.14); }
     }
   </style>
+
+  <!-- Fireworks overlay (page-wide animation) -->
+  <style>
+    canvas.fireworks{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      pointer-events:none;
+      z-index:9999;
+      mix-blend-mode: normal;
+      background: transparent;
+    }
+  </style>
+
+  <!-- ====== Decorative mehndi corner motifs (CSS-only) ====== -->
+  <style>
+    .bg-motif{
+      position:fixed; inset:0;
+      pointer-events:none; z-index:7;
+    }
+    .bg-motif .corner{
+      position:absolute;
+      width:34vmin; height:34vmin; opacity:.26;
+      filter: drop-shadow(0 6px 24px rgba(140,74,47,.22));
+    }
+    .bg-motif .corner svg{ width:100%; height:100%; }
+
+    .bg-motif .corner-tl{ top:-18px; left:-10px; transform:rotate(-6deg); }
+    /* bottom-right overlay removed */
+
+    .bg-motif .spin-slow{ animation: motif-spin 60s linear infinite; transform-origin: 50% 50%; }
+    .bg-motif .float-soft{ animation: motif-float 7.5s ease-in-out infinite; }
+
+    @keyframes motif-spin{
+      from{ transform: rotate(0deg); }
+      to  { transform: rotate(360deg); }
+    }
+    @keyframes motif-float{
+      0%,100%{ transform: translateY(0); }
+      50%{ transform: translateY(-6px); }
+    }
+    @media (min-width:1400px){
+      .bg-motif .corner{ width:38vmin; height:38vmin; }
+    }
+  </style>
 </head>
 
 <body>
+  <!-- Fireworks canvas -->
+  <canvas class="fireworks" aria-hidden="true"></canvas>
+
+  <!-- Decorative mehndi corner motifs (SVG) removed as requested -->
 
   <!-- ======= Mobile nav toggle button ======= -->
   <!-- <button type="button" class="mobile-nav-toggle d-xl-none"><i class="bi bi-list mobile-nav-toggle"></i></button> -->
@@ -315,11 +365,7 @@
 
                 </ul>
               </div>
-              <div class="col-lg-6">
-                <ul>
-                  
-                </ul>
-              </div>
+
             </div>
             <p>
           I believe each design tells a story. Whether simple or elaborate, I work closely 
@@ -483,23 +529,15 @@
     <!-- ======= Events Section ======= -->
     <section id="events" class="events">
       <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Events</h2>
-          <!-- <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p> -->
-        </div>
-
+        <div class="section-title"><h2>Events</h2></div>
         <div class="row">
-
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
             <div class="icon-box">
-              <!-- <div class="icon"> -->
               <img src="assets/img/events/Event-1.jpg" class="img-fluid" alt="">
               <h4><a href="">Bridal Mehndi</a></h4>
               <p>Exquisite full-hand and full-leg bridal designs tailored for your big day.</p>
             </div>
           </div>
-
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
             <div class="icon-box iconbox-orange ">
               <img src="assets/img/events/Event-2.jpg" class="img-fluid" alt="">
@@ -507,7 +545,6 @@
               <p>Quick, stylish, and elegant designs perfect for birthdays, engagements, and casual gatherings. Traditional and modern patterns for Eid, Karva Chauth, Diwali, and more.</p>
             </div>
           </div>
-
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0" data-aos="zoom-in" data-aos-delay="300">
             <div class="icon-box iconbox-pink">
               <img src="assets/img/events/Event-3.jpg" class="img-fluid" alt="">
@@ -515,13 +552,11 @@
               <p>Personalized henna art crafted to match your style and story.</p>
             </div>
           </div>
-
         </div>
-
       </div>
     </section><!-- End Events Section -->
 
-    <!-- ======= Gallery Section (updated to 15-image masonry) ======= -->
+    <!-- ======= Gallery Section ======= -->
     <section class="gallary section-bg" id="gallery">
       <div class="container">
         <div class="section-title">
@@ -552,9 +587,8 @@
     </section>
     <!-- End Gallery Section -->
 
-    <!-- ======= Contact Section (upgraded) ======= -->
+    <!-- ======= Contact Section ======= -->
     <section id="contact" class="contact-cta section-bg position-relative">
-      <!-- subtle pattern -->
       <span class="contact-pattern" aria-hidden="true"></span>
 
       <div class="container" data-aos="fade-up">
@@ -564,7 +598,6 @@
         </div>
 
         <div class="row g-5 align-items-start contact-grid">
-          <!-- Left: sticky CTA buttons + quick facts -->
           <div class="col-lg-5">
             <div class="sticky-lg-top" style="top: 6rem;">
               <div class="row g-3">
@@ -1042,7 +1075,7 @@
           // ripple
           var rect = card.getBoundingClientRect();
           var x = (ev.clientX || (rect.left + rect.width/2)) - rect.left;
-          var y = (ev.clientY || (rect.top + rect.height/2)) - rect.top;
+          var y = (ev.clientY || (ev.clientY === 0 ? 0 : (rect.top + rect.height/2)) ) - rect.top;
           var ripple = document.createElement('span');
           ripple.className = 't-ripple';
           ripple.style.left = x + 'px';
@@ -1051,14 +1084,8 @@
 
           // pulse halo
           card.classList.add('t-clicked');
-          setTimeout(function(){
-            card.classList.remove('t-clicked');
-          }, 520);
-
-          // cleanup ripple
-          setTimeout(function(){
-            if (ripple && ripple.parentNode) ripple.parentNode.removeChild(ripple);
-          }, 760);
+          setTimeout(function(){ card.classList.remove('t-clicked'); }, 520);
+          setTimeout(function(){ if (ripple && ripple.parentNode) ripple.parentNode.removeChild(ripple); }, 760);
         }
 
         // pointer (mouse/touch/pen)
@@ -1070,13 +1097,227 @@
 
         // keyboard trigger
         card.addEventListener('keydown', function(e){
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            triggerEffects(e);
-          }
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); triggerEffects(e); }
         });
       });
     });
+  </script>
+
+  <!-- High-contrast page-wide intro bursts (no click needed) -->
+  <script>
+    (function(){
+      var canvas = document.querySelector('.fireworks');
+      if (!canvas) return;
+
+      var ctx = canvas.getContext('2d');
+      var DPR = Math.min(2, window.devicePixelRatio || 1);
+
+      function setCanvasSize() {
+        canvas.width  = Math.floor(window.innerWidth  * DPR);
+        canvas.height = Math.floor(window.innerHeight * DPR);
+        canvas.style.width  = window.innerWidth + 'px';
+        canvas.style.height = window.innerHeight + 'px';
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      }
+      setCanvasSize();
+      window.addEventListener('resize', setCanvasSize, false);
+
+      function getLuma(rgbString){
+        var m = rgbString && rgbString.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+        var r = m ? +m[1] : 255, g = m ? +m[2] : 255, b = m ? +m[3] : 255;
+        return 0.2126*r + 0.7152*g + 0.0722*b;
+      }
+      var bodyBg = getComputedStyle(document.body).backgroundColor;
+      var isLightBG = getLuma(bodyBg) > 185;
+
+      var paletteLightBG = ['#6B2C1A', '#B9362C', '#006CFF', '#008F6D', '#8E3BFF', '#FFAA00'];
+      var paletteDarkBG  = ['#FF6B6B', '#FFD166', '#5AD2FF', '#B388FF', '#8CFFDA', '#FFFFFF'];
+      var palette = isLightBG ? paletteLightBG : paletteDarkBG;
+
+      var particles = [], rings = [], sparkles = [];
+
+      function rand(min, max){ return min + Math.random()*(max-min); }
+      function pick(arr){ return arr[(Math.random()*arr.length)|0]; }
+
+      function addGradientCircle(x, y, r, color, alpha){
+        var g = ctx.createRadialGradient(x, y, 0, x, y, r);
+        g.addColorStop(0, 'rgba(255,255,255,'+(0.8*alpha)+')');
+        g.addColorStop(0.25, color);
+        g.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI*2);
+        ctx.fill();
+      }
+
+      function Particle(x,y,vx,vy,size,color,type){
+        this.x=x; this.y=y; this.vx=vx; this.vy=vy;
+        this.size=size; this.color=color; this.type=type;
+        this.life=0; this.ttl=900+Math.random()*600; // ms
+        this.trail=[];
+        this.rot = rand(0,Math.PI*2);
+      }
+      Particle.prototype.update = function(dt){
+        this.life += dt;
+        var f = 0.985;
+        this.vx *= f; this.vy = this.vy*f + 0.06; // gravity
+        this.x += this.vx * (dt/16);
+        this.y += this.vy * (dt/16);
+        this.trail.push({x:this.x, y:this.y});
+        if (this.trail.length>8) this.trail.shift();
+      };
+      Particle.prototype.draw = function(){
+        var a = Math.max(0, 1 - this.life/this.ttl);
+        // trail
+        if (this.trail.length>1){
+          ctx.beginPath();
+          for (var i=0;i<this.trail.length;i++){
+            var t=this.trail[i];
+            if(i===0) ctx.moveTo(t.x,t.y); else ctx.lineTo(t.x,t.y);
+          }
+          ctx.lineWidth = this.type==='petal'? 2.2 : 1.6;
+          ctx.strokeStyle = isLightBG ? 'rgba(40,24,18,'+(0.35*a)+')' : this.color;
+          ctx.globalAlpha = isLightBG ? 0.45*a : 0.28*a;
+          ctx.stroke();
+          ctx.globalAlpha = 1;
+        }
+
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        if (this.type==='petal'){
+          ctx.rotate(this.rot);
+          var len = this.size*2.2;
+          var grad = ctx.createLinearGradient(0,-len,0,0);
+          grad.addColorStop(0,this.color);
+          grad.addColorStop(1,'rgba(255,255,255,0)');
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.moveTo(0,0);
+          ctx.quadraticCurveTo(len*0.38,-this.size,0,-len);
+          ctx.quadraticCurveTo(-len*0.38,-this.size,0,0);
+          ctx.fill();
+
+          if (isLightBG){
+            ctx.lineWidth = .8;
+            ctx.strokeStyle = 'rgba(40,24,18,.5)';
+            ctx.stroke();
+          }
+        } else {
+          addGradientCircle(0,0,this.size*2.4,this.color,0.9);
+          ctx.globalAlpha = .25;
+          ctx.fillStyle = this.color;
+          ctx.beginPath(); ctx.arc(0,0,this.size*0.9,0,Math.PI*2); ctx.fill();
+          ctx.globalAlpha = 1;
+        }
+        ctx.restore();
+      };
+
+      function Ring(x,y,color){
+        this.x=x; this.y=y; this.r=2; this.alpha=1; this.line=3; this.color=color;
+        this.ttl=900; this.life=0;
+        this.target = rand(45,90); // ~50% area scale
+      }
+      Ring.prototype.update=function(dt){
+        this.life += dt;
+        var p = Math.min(1, this.life/this.ttl);
+        this.r = 2 + (this.target-2)*p;
+        this.alpha = 1 - p;
+        this.line = 3*(1-p);
+      };
+      Ring.prototype.draw=function(){
+        ctx.save();
+        // outer neutral ring for contrast
+        ctx.globalAlpha = 0.65*this.alpha;
+        ctx.lineWidth = this.line+1.5;
+        ctx.strokeStyle = isLightBG ? 'rgba(20,12,8,.38)' : 'rgba(255,255,255,.6)';
+        ctx.beginPath(); ctx.arc(this.x,this.y,this.r,0,Math.PI*2); ctx.stroke();
+        // colored dashed ring
+        ctx.globalAlpha = 0.9*this.alpha;
+        ctx.setLineDash([4,10]);
+        ctx.lineDashOffset = -performance.now()/360;
+        ctx.lineWidth = this.line;
+        ctx.strokeStyle = this.color;
+        ctx.beginPath(); ctx.arc(this.x,this.y,this.r,0,Math.PI*2); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.restore();
+      };
+
+      function Sparkle(x,y,color){
+        this.x=x; this.y=y; this.size=rand(1.8,3.2); this.alpha=1; this.rot=rand(0,Math.PI*2); this.color=color;
+        this.life=0; this.ttl=520+Math.random()*400;
+      }
+      Sparkle.prototype.update=function(dt){
+        this.life += dt; this.alpha = Math.max(0, 1 - this.life/this.ttl);
+      };
+      Sparkle.prototype.draw=function(){
+        ctx.save();
+        ctx.translate(this.x,this.y);
+        ctx.rotate(this.rot);
+        ctx.globalAlpha = this.alpha;
+        ctx.fillStyle = isLightBG ? '#2b1a14' : '#FFFFFF';
+        ctx.fillRect(-this.size, -0.6, this.size*2, 1.2);
+        ctx.fillRect(-0.6, -this.size, 1.2, this.size*2);
+        ctx.restore();
+      };
+
+      function burst(x,y){
+        rings.push(new Ring(x,y,pick(palette)));
+
+        var count = 56;
+        for (var i=0;i<count;i++){
+          var angle = (Math.PI*2/count)*i + rand(-0.22,0.22);
+          var speed = rand(1.4,3.2); // tuned for ~50% area
+          var vx = Math.cos(angle)*speed*4.2;
+          var vy = Math.sin(angle)*speed*4.2;
+          var type = (i%3===0)? 'petal' : 'dot';
+          var size = type==='petal'? rand(3.8,6.2) : rand(2.5,4.5);
+          var p = new Particle(x,y,vx,vy,size,pick(palette),type);
+          particles.push(p);
+          if (i%5===0){
+            sparkles.push(new Sparkle(x + Math.cos(angle)*rand(12,34), y + Math.sin(angle)*rand(12,34), pick(palette)));
+          }
+        }
+      }
+
+      var last = performance.now();
+      function frame(now){
+        var dt = Math.min(50, now - last); last = now;
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+
+        for (var i=particles.length-1;i>=0;i--){
+          var p = particles[i];
+          p.update(dt); p.draw();
+          if (p.life > p.ttl) particles.splice(i,1);
+        }
+        for (var r=rings.length-1;r>=0;r--){
+          var ring = rings[r];
+          ring.update(dt); ring.draw();
+          if (ring.life > ring.ttl) rings.splice(r,1);
+        }
+        for (var s=sparkles.length-1;s>=0;s--){
+          var sp = sparkles[s];
+          sp.update(dt); sp.draw();
+          if (sp.life > sp.ttl) sparkles.splice(s,1);
+        }
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+
+      // Fire exactly five intro bursts on load; no click triggers
+      window.addEventListener('load', function(){
+        var ww = window.innerWidth, wh = window.innerHeight;
+        var spots = [
+          [0.50, 0.50],
+          [0.62, 0.42],
+          [0.38, 0.58],
+          // [0.58, 0.62],
+          // [0.42, 0.38]
+        ];
+        spots.forEach(function(pct, i){
+          setTimeout(function(){ burst(ww*pct[0], wh*pct[1]); }, 300*(i+1));
+        });
+      });
+    })();
   </script>
 
   <!-- Dynamic year for footer -->
